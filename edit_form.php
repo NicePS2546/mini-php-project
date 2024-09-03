@@ -2,20 +2,13 @@
 include "header.php";
 include "footer.php";
 include "65_41_conDB.php";
-?>
-<?php
-session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: ../HW07/loginCrud/login.php");
-    exit();
-}
 
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     if(isset($_POST['id'])){
         $id = $_POST['id'];
-        $reservation = $server->getSole($connect,$tableName,$id);
+        $reservation = $server->getSole($connect,$table,$id);
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         
 ?>

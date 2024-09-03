@@ -2,7 +2,7 @@
 require_once '65_41_conDB.php';
 include 'header.php';
 
-$reservationss = $server->getDataTable($connect,$tableName);
+$reservationss = $server->getDataTable($connect,$table);
 ?>
 
 <!DOCTYPE html>

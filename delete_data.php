@@ -4,7 +4,7 @@ include 'header.php';
 include 'footer.php';
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
-    $result = $server->deleteById($connect, $tableName, $id);
+    $result = $server->deleteById($connect, $table, $id);
     echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
     if ($result) {
         echo '<script>

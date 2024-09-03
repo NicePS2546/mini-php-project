@@ -3,19 +3,18 @@ $servername = 'localhost';
 $DBusername = 'root';
 $DBpassword = '';
 $dataBaseName = 'db_654230015';
-$tableName = 'tb_reservation';
-
+$table = 'tb_reservation';
+$userInfoTable = 'user_info';
 class Server
 {
   private $servername;
   private $username;
   private $password;
   private $dataBaseName;
-  private $tableName;
 
-  public $DBconnect;
+  private $DBconnect;
 
-  function __construct($servername, $DBusername, $DBpassword, $dataBaseName)
+  public function __construct($servername, $DBusername, $DBpassword, $dataBaseName)
   {
     $this->servername = $servername;
     $this->username = $DBusername;
@@ -64,7 +63,7 @@ class Server
     return $result;
 
   }
-  function update($conn, $tablename, $dayAmount, $price, $isMember, $reservedBy, $email, $peopleAmount,$roomType,$id){
+  public function update($conn, $tablename, $dayAmount, $price, $isMember, $reservedBy, $email, $peopleAmount,$roomType,$id){
     
     $total = $price * $dayAmount;
     
@@ -91,7 +90,7 @@ class Server
     price = :price, 
     taxFee = :taxFee, 
     total = :total 
-WHERE id = :id";
+    WHERE id = :id";
     // Prepare statement
     $stmt = $conn->prepare($sql);
   
@@ -107,7 +106,7 @@ WHERE id = :id";
       'id'=>$id]);
     return $result;
   }
-  function connectServer($servername, $username, $dbname, $password)
+  private function connectServer($servername, $username, $dbname, $password)
   {
     try {
       $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
@@ -128,11 +127,11 @@ WHERE id = :id";
     $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $reservations;
   }
-  function deleteById($conn, $table, $id)
+  public function deleteById($conn, $table, $id)
   {
     try {
 
-      $sql = "DELETE FROM $table WHERE id= :id";
+      $sql = "DELETE FROM $table WHERE id = :id";
       $stmt = $conn->prepare($sql);
       // $stmt->bindParam(1, $id);
       // $result = $stmt->execute();
@@ -149,14 +148,19 @@ WHERE id = :id";
     $smt = $conn->prepare($sql);
     $smt->execute(["id"=>$id]);
     $data = $smt->fetch(PDO::FETCH_ASSOC);
+    if($data){
+      echo "<script>console.log('fetched user')</script>";
+    }else{
+      echo "<script>console.log('error')</script>";
+    }
     return $data;
   }
-  function getConnection()
+  public function getConnection()
   {
     return $this->DBconnect;
   }
 }
-$server = new Server($servername, $DBusername, $DBpassword, $dataBaseName, $tableName);
+$server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
 
 $connect = $server->getConnection();
 

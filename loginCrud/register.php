@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php require "session_manage.php"; ?>
 
 <!doctype html>
 <html lang="en">
@@ -41,7 +41,7 @@
                 <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
 
 
-                    <form class="d-flex  flex-rows card p-5" action='register.php' method='post'>
+                    <form class="d-flex  flex-rows card p-5" action='register_script.php' method='post'>
 
                         <!-- Email input -->
 
@@ -85,53 +85,6 @@
     </section>
 
 </body>
-<?php
 
-include "65_41_conDB.php";
-
-if (isset($_SESSION['username'])) {
-    header("Location: ../index.php");
-    exit();
-  };
-
-class Register
-{
-    public $username;
-    public $password;
-    public $email;
-    public $connect;
-    // function __construct($connect, $username, $password, $email)
-    // {
-    //     $this->connect = $connect;
-    //     $this->username = $username;
-    //     $this->password = $password;
-    //     $this->email = $email;
-    // }
-
-    function register($connect, $username, $password, $email)
-    {
-        $sql = "INSERT INTO users (username, password, email) VALUES (:username, :password, :email)";
-        $smt = $connect->prepare($sql);
-        $registerUser = $smt->execute(["username" => $username, "password" => $password, "email" => $email]);
-        if ($registerUser) {
-            echo "<script>console.log('Successfully Registered User')</script>";
-            
-        } else {
-            echo "<script>console.log('Fail to Registered User')</script>";
-        }
-    }
-}
-
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $registerSystem = new Register();
-    $registerSystem->register($connect,$username,$hashed_password,$email);
-}
-?>
 
 </html>

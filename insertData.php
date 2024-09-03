@@ -2,17 +2,7 @@
 include "header.php";
 include "footer.php";
 ?>
-<?php
-session_start();
 
-if (!isset($_SESSION['username'])) {
-    header("Location: ../HW07/loginCrud/login.php");
-    exit();
-};
-
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">

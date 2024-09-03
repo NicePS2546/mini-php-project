@@ -1,4 +1,3 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +15,6 @@
 </head>
 <body>
     <?php
-    if (!isset($_SESSION['username'])) {
-        header("Location: ../HW07/loginCrud/login.php");
-        exit();
-      };
-
     include "header.php";
     include "main-menu.php";
     include "footer.php";

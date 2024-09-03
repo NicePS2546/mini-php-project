@@ -1,8 +1,3 @@
-<?php 
-    session_start(); 
-    $username = $_SESSION['username'];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +18,7 @@
     <div class="col-md-8 col-lg-6 d-flex justify-content-center align-items-center mx-auto col-xl-4 offset-xl-1">
         <div style='padding: 20px 25px 20px 25px;' class='row d-flex card justify-content-center align-items-center h-100'>
         <form action='landing.php' method='post'>
-        <h1>Welcome <?php echo $username ?> !</h1>
+        <h1>Welcome <?php echo $_SESSION['username'] ?> !</h1>
         <button name='logout' value = 'true' type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem;  margin-top:50px; padding-right: 2.5rem;">Logout</button>
 
         </form>

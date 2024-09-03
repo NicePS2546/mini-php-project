@@ -1,8 +1,7 @@
 <?php
     
     include '65_41_conDB.php';
-    $server = new Server($servername,$DBusername,$DBpassword,$dataBaseName);
-    $conn = $server->getConnection();
+    
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $name = $_POST['reservedBy'];
@@ -20,7 +19,7 @@
             $price = 3500;
         };
 
-       $result = $server->reservation($conn,$tableName,$dayAmount,$price,$isMember,$name,$email,$peopleAmount,$roomType);
+       $result = $server->reservation($connect,$table,$dayAmount,$price,$isMember,$name,$email,$peopleAmount,$roomType);
 
        if ($result) {
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';

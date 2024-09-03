@@ -19,7 +19,7 @@
             $price = 3500;
         };
 
-       $result = $server->update($connect,$tableName,$dayAmount,$price,$isMember,$name,$email,$peopleAmount,$roomType,$id);
+       $result = $server->update($connect,$table,$dayAmount,$price,$isMember,$name,$email,$peopleAmount,$roomType,$id);
 
        if ($result) {
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';

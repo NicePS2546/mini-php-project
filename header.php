@@ -1,3 +1,5 @@
+<?php include "session_manage.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,7 +28,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php"><img src="image/photo.jpg" alt="myphoto" class="rounded-pill
+            <a class="navbar-brand" href="profile.php"><img src="image/photo.jpg" alt="myphoto" class="rounded-pill
 me-2" style="width: 30px;">PASIT @PHP</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bstarget="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
