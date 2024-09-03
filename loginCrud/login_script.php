@@ -8,7 +8,7 @@
         $password = $_POST['password'];
         
 
-        $server->login($connect, $table,$email, $password,$avatar);
+        $server->login($connect, $table,$email, $password);
         
     }
       

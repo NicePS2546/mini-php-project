@@ -46,6 +46,7 @@
                                         alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                                     <input type="hidden" name="id" value="<?php echo $_SESSION['id'] ?>">
                                     
+                                    
                                     <p><?php echo $fullname ?></p>
                                     <p><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
                                     <i class="far fa-edit mb-5"></i>

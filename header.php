@@ -30,7 +30,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="profile.php"><img src="<?php echo $_SESSION['avatar'] ?>" alt="myphoto" class="rounded-pill
-me-2" style="width: 30px;">PASIT @PHP</a>
+me-2 text-uppercase" style="width: 30px;"><?php echo strtoupper($_SESSION['fullname']); ?></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bstarget="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 arialabel="Toggle navigation">

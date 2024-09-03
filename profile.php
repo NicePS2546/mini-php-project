@@ -52,17 +52,25 @@
                     <div class="row pt-1">
                       <button type="submit" class="btn btn-primary">แก้ไขโปรไฟล์</button>
                     </div>
-
+                    
                   </div>
+                  
                 </div>
+               
               </div>
+             
+            </div>
+            <div class="d-flex justify-content-end" >
+                        <a href="index.php" class="btn btn-primary">Back</a>
             </div>
           </div>
+          
         </div>
 
       </div>
-
+      
     </section>
+    
   </form>
 </body>
 

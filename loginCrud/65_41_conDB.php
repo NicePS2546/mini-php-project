@@ -11,7 +11,7 @@ class Server
   private $username;
   private $password;
   private $dataBaseName;
-  
+
 
   public $DBconnect;
 
@@ -34,20 +34,21 @@ class Server
       echo "เกิดข้อผิดพลาดในการเพิ่มข้อมูล";
     }
   }
-  function register($connect, $table,$username, $password, $email, $role = 0 /*default role = User*/)
+  function register($connect, $table, $username, $password, $email, $role = 0 /*default role = User*/)
   {
     $sql = "INSERT INTO $table (username, password, email,role) VALUES (:username, :password, :email, :role)";
     $smt = $connect->prepare($sql);
     $registerUser = $smt->execute(["username" => $username, "password" => $password, "email" => $email, "role" => $role]);
     return $registerUser;
   }
-  public function add_userInfo($conn,$table,$id,$email){
+  public function add_userInfo($conn, $table, $id, $email)
+  {
     $sql = "INSERT INTO $table (id, fname, lname, email) VALUES (:id, :fname, :lname, :email)";
     $smt = $conn->prepare($sql);
-    $data = $smt->execute(["id"=> $id,'fname'=>"ยังไม่ได้ตั้ง",'lname'=>"ยังไม่ได้ตั้ง",'email'=> $email]);
+    $data = $smt->execute(["id" => $id, 'fname' => "ยังไม่ได้ตั้ง", 'lname' => "ยังไม่ได้ตั้ง", 'email' => $email]);
     return $data;
   }
-  function login($conn, $table,$email, $password)
+  function login($conn, $table, $email, $password)
   {
     $sql = "SELECT * FROM $table WHERE email = :email";
     $smt = $conn->prepare($sql);
@@ -57,9 +58,14 @@ class Server
       $_SESSION['id'] = $user['id'];
       $_SESSION['username'] = $user['username'];
       $_SESSION['email'] = $user['email'];
-      $user = $this->getSoleByEmail($conn,'user_info',$_SESSION['email']);
-      $avatar = $user['avatar'] == "default_avatar.jpg" ? "image/".$user['avatar'] : "image/upload/".$user['avatar'];
+      
+      $user_info = $this->getSoleByEmail($conn, 'user_info', $_SESSION['email']);
+      $avatar = $user_info['avatar'] == "default_avatar.jpg" ? "image/" . $user_info['avatar'] : "image/upload/" . $user_info['avatar'];
+      $fullname = ((isset($user_info['fname']) && $user_info['fname'] != "ยังไม่ได้ตั้ง") && (isset($user_info['lname']) && $user_info['lname'] != "ยังไม่ได้ตั้ง"))
+        ? $user_info['fname'] . " " . $user_info['lname']
+        : "ยังไม่ได้ตั้งชื่อ";
       $_SESSION['avatar'] = $avatar;
+      $_SESSION['fullname'] = $fullname;
       echo "<script>console.log('Login Successfully')</script>";
       header("Location: ../index.php");
       exit(); // Ensure no further output after redirect
@@ -82,32 +88,35 @@ class Server
     }
 
   }
-  public function getSole($conn, $table, $id){
+  public function getSole($conn, $table, $id)
+  {
     $sql = "SELECT * FROM $table WHERE id = :id";
     $smt = $conn->prepare($sql);
-    $smt->execute(["id"=>$id]);
+    $smt->execute(["id" => $id]);
     $data = $smt->fetch(PDO::FETCH_ASSOC);
-    if($data){
+    if ($data) {
       echo "<script>console.log('fetched user')</script>";
-    }else{
+    } else {
       echo "<script>console.log('error')</script>";
     }
     return $data;
   }
 
-  public function getSoleByEmail($conn, $table, $email){
+  public function getSoleByEmail($conn, $table, $email)
+  {
     $sql = "SELECT * FROM $table WHERE email = :email";
     $smt = $conn->prepare($sql);
-    $smt->execute(["email"=>$email]);
+    $smt->execute(["email" => $email]);
     $data = $smt->fetch(PDO::FETCH_ASSOC);
-    if($data){
+    if ($data) {
       echo "<script>console.log('fetched user')</script>";
-    }else{
+    } else {
       echo "<script>console.log('error')</script>";
     }
     return $data;
   }
-  public function upload_picture($conn,$table,$id,$file,$targetDir){
+  public function upload_picture($conn, $table, $id, $file, $targetDir)
+  {
     if ($file['error'] === UPLOAD_ERR_OK) {
       // Get the file extension
       $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
@@ -115,14 +124,14 @@ class Server
       // Create the target file path with the user's name and original extension
       $originalFileName = basename($file['name']);
 
-        // Create the full path for the target file
-        $targetFile = $targetDir . $randomFileName;
-  
+      // Create the full path for the target file
+      $targetFile = $targetDir . $randomFileName;
+
       // Check if the target directory exists; if not, create it
       if (!is_dir($targetDir)) {
-          mkdir($targetDir, 0755, true);
+        mkdir($targetDir, 0755, true);
       }
-  
+
       // Move the uploaded file to the target directory
       if (move_uploaded_file($file['tmp_name'], $targetFile)) {
         // Insert the original file name into the database
@@ -134,30 +143,32 @@ class Server
         WHERE id = :id";
         // Prepare statement
         $stmt = $conn->prepare($sql);
-        $upload = $stmt->execute(["avatar"=>$randomFileName,"id"=>$id]);
+        $upload = $stmt->execute(["avatar" => $randomFileName, "id" => $id]);
         session_start();
         $_SESSION['avatar'] = $targetFile;
-        
-        return ['status'=>$upload,'fileName'=>$randomFileName];
-        
-    } else {
+
+        return ['status' => $upload, 'fileName' => $randomFileName];
+
+      } else {
         echo "Error moving the uploaded file.";
-    }
-  } else {
+      }
+    } else {
       echo "Error: " . $file['error'];
+    }
   }
-}
-  public function update_info($conn,$table,$fname,$lname,$id){
-    if(!isset($fname) && !isset($lname) && !isset($id)){
+  public function update_info($conn, $table, $fname, $lname, $id)
+  {
+    if (!isset($fname) && !isset($lname) && !isset($id)) {
       return false;
-    };
+    }
+    ;
     $sql = "UPDATE $table SET 
     fname = :fname,
     lname = :lname
     WHERE id = :id";
     // Prepare statement
     $stmt = $conn->prepare($sql);
-    $update = $stmt->execute(["fname"=>$fname,"lname"=>$lname,"id"=>$id]);
+    $update = $stmt->execute(["fname" => $fname, "lname" => $lname, "id" => $id]);
     
     return $update;
   }
@@ -165,7 +176,8 @@ class Server
   {
     return $this->DBconnect;
   }
-};
+}
+;
 
 $server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
 

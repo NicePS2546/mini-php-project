@@ -11,7 +11,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
-    $user = $server->getSole($connect,$userInfoTable,$id);
+    
+    
+
     // Set default status to true in case no picture is uploaded
     $upload_picture['status'] = true;
 
@@ -30,6 +32,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $update = $server->update_info($connect,$userInfoTable,$fname,$lname,$id);
+    if ($update) {
+        $user = $server->getSole($connect,$userInfoTable,$id);
+        $fullname = ((isset($user['fname']) && $user['fname'] != "ยังไม่ได้ตั้ง") && (isset($user['lname']) && $user['lname'] != "ยังไม่ได้ตั้ง"))
+        ? $user['fname'] . " " . $user['lname']
+        : "ยังไม่ได้ตั้งชื่อ";
+        session_start();
+        $_SESSION['fullname'] = $fullname;
+        
+    };
    echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
    if ($upload_picture['status'] && $update) {
     echo '<script>
