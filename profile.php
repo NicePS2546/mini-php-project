@@ -1,4 +1,5 @@
-<?php include "user_manage.php" ?>
+<?php include "user_manage.php";
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,8 +28,7 @@
               <div class="row g-0">
                 <div class="col-md-4 gradient-custom text-center text-white"
                   style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp" alt="Avatar"
-                    class="img-fluid my-5" style="width: 80px;" />
+                  <img src="<?php echo $avatar ?>" alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                   <h5><?php echo $fullname ?></h5>
                   <p><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
                   <i class="far fa-edit mb-5"></i>
@@ -47,7 +47,7 @@
                         <p class="text-muted"><?php echo $fullname ?></p>
                       </div>
                     </div>
-                    
+
                     <hr class="mt-0 mb-4">
                     <div class="row pt-1">
                       <button type="submit" class="btn btn-primary">แก้ไขโปรไฟล์</button>

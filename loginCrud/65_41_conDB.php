@@ -57,7 +57,9 @@ class Server
       $_SESSION['id'] = $user['id'];
       $_SESSION['username'] = $user['username'];
       $_SESSION['email'] = $user['email'];
-
+      $user = $this->getSoleByEmail($conn,'user_info',$_SESSION['email']);
+      $avatar = $user['avatar'] == "default_avatar.jpg" ? "image/".$user['avatar'] : "image/upload/".$user['avatar'];
+      $_SESSION['avatar'] = $avatar;
       echo "<script>console.log('Login Successfully')</script>";
       header("Location: ../index.php");
       exit(); // Ensure no further output after redirect
@@ -80,6 +82,19 @@ class Server
     }
 
   }
+  public function getSole($conn, $table, $id){
+    $sql = "SELECT * FROM $table WHERE id = :id";
+    $smt = $conn->prepare($sql);
+    $smt->execute(["id"=>$id]);
+    $data = $smt->fetch(PDO::FETCH_ASSOC);
+    if($data){
+      echo "<script>console.log('fetched user')</script>";
+    }else{
+      echo "<script>console.log('error')</script>";
+    }
+    return $data;
+  }
+
   public function getSoleByEmail($conn, $table, $email){
     $sql = "SELECT * FROM $table WHERE email = :email";
     $smt = $conn->prepare($sql);
@@ -92,12 +107,66 @@ class Server
     }
     return $data;
   }
+  public function upload_picture($conn,$table,$id,$file,$targetDir){
+    if ($file['error'] === UPLOAD_ERR_OK) {
+      // Get the file extension
+      $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+      $randomFileName = uniqid(mt_rand(), true) . '.' . pathinfo($file["name"], PATHINFO_EXTENSION);
+      // Create the target file path with the user's name and original extension
+      $originalFileName = basename($file['name']);
 
+        // Create the full path for the target file
+        $targetFile = $targetDir . $randomFileName;
+  
+      // Check if the target directory exists; if not, create it
+      if (!is_dir($targetDir)) {
+          mkdir($targetDir, 0755, true);
+      }
+  
+      // Move the uploaded file to the target directory
+      if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+        // Insert the original file name into the database
+        // $sql = "INSERT INTO $table (avatar) VALUES (:avatar)";
+        // $stmt = $conn->prepare($sql);
+        // $upload = $stmt->execute(["avatar"=>$originalFileName]);
+        $sql = "UPDATE $table SET 
+        avatar = :avatar
+        WHERE id = :id";
+        // Prepare statement
+        $stmt = $conn->prepare($sql);
+        $upload = $stmt->execute(["avatar"=>$randomFileName,"id"=>$id]);
+        session_start();
+        $_SESSION['avatar'] = $targetFile;
+        
+        return ['status'=>$upload,'fileName'=>$randomFileName];
+        
+    } else {
+        echo "Error moving the uploaded file.";
+    }
+  } else {
+      echo "Error: " . $file['error'];
+  }
+}
+  public function update_info($conn,$table,$fname,$lname,$id){
+    if(!isset($fname) && !isset($lname) && !isset($id)){
+      return false;
+    };
+    $sql = "UPDATE $table SET 
+    fname = :fname,
+    lname = :lname
+    WHERE id = :id";
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+    $update = $stmt->execute(["fname"=>$fname,"lname"=>$lname,"id"=>$id]);
+    
+    return $update;
+  }
   function getConnection()
   {
     return $this->DBconnect;
   }
-}
+};
+
 $server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
 
 $connect = $server->getConnection();

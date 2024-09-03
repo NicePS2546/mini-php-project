@@ -155,11 +155,17 @@ class Server
     }
     return $data;
   }
+
+  
   public function getConnection()
   {
     return $this->DBconnect;
   }
+
 }
+
+
+
 $server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
 
 $connect = $server->getConnection();

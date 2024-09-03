@@ -1,11 +1,12 @@
-<?php include "user_manage.php" ?>
+<?php include "user_manage.php";
+       ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile Edit</title>
     <style>
         .gradient-custom {
             /* fallback for old browsers */
@@ -32,7 +33,7 @@
 </head>
 
 <body>
-    <form action="edit_profile.php">
+    <form action="edit_profile_script.php" method="post" enctype="multipart/form-data">
         <section class="vh-100" style="background-color: #f4f5f7;">
             <div class="container py-5 h-75">
                 <div class="row d-flex justify-content-center align-items-center h-100">
@@ -41,9 +42,9 @@
                             <div class="row g-0">
                                 <div class="col-md-4 gradient-custom text-center text-white"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                    <img src="<?php echo $avatar ?>"
                                         alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
-                                    
+                                    <input type="hidden" name="id" value="<?php echo $_SESSION['id'] ?>">
                                     
                                     <p><?php echo $fullname ?></p>
                                     <p><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
@@ -58,15 +59,21 @@
                                                 <h6>อีเมลล์</h6>
                                                 <p class="text-muted"><?php echo $user_data['email'] ?></p>
                                             </div>
-                                            <div class="col-8 mb-3">
-                                                <h6>ชื่อ</h6>
-                                                <input class="form-control opacity-input" style="text-align: start;"
-                                                    value="<?php echo $fullname ?>">
-                                                    
+                                            <div class="col-8 mb-3" style="display: flex; gap:50px;" >
+                                                <div class="row" >
+                                                <h6>ชื่อจริง</h6>
+                                                <input class="form-control opacity-input" name="fname" style="text-align: start; width:120px;"
+                                                    value="<?php echo $user['fname'] ?>">
+                                                </div>
+                                                <div class="row">
+                                                <h6>นามสกุล</h6>
+                                                <input class="form-control opacity-input" name="lname"  style="text-align: start; width:120px;"
+                                                    value="<?php echo $user['lname'] ?>">
+                                                    </div>
                                             </div>
                                             <div class="col-8 mb-3">
                                                 <h6>เลือกรูปภาพ</h6>
-                                                <input type="file"  class="form-control mb-3" id="customFile" />
+                                                <input type="file" name="picture"  class="form-control mb-3" id="customFile" />
                                                     
                                             </div>
                                             

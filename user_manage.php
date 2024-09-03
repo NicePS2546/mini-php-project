@@ -7,7 +7,7 @@ include "footer.php";
  $user_data = $user_DB->getSole($user_conn,'users',$_SESSION['id']);
 
  $user = $user_DB->getSole($user_conn,$userInfoTable,$_SESSION['id']);
-
+ $avatar = $user['avatar'] == "default_avatar.jpg" ? "image/".$user['avatar'] : "image/upload/".$user['avatar'];
  $fullname = ((isset($user['fname']) && $user['fname'] != "ยังไม่ได้ตั้ง") && (isset($user['lname']) && $user['lname'] != "ยังไม่ได้ตั้ง")) 
  ? $user['fname'] . " " . $user['lname']
  : "ยังไม่ได้ตั้งชื่อ";
