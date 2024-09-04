@@ -11,12 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
-    
+    $email = $_POST['email'];
     
 
     // Set default status to true in case no picture is uploaded
     $upload_picture['status'] = true;
-
+    $user = $server->getSole($connect,$userInfoTable,$id);
     // Check if the file is uploaded
     if (isset($file) && $file['error'] == UPLOAD_ERR_OK) {
         // Call the upload function if a file is uploaded
@@ -31,13 +31,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $upload_picture = $server->upload_picture($connect, $userInfoTable, $id, $file, $targetDir);
     }
 
-    $update = $server->update_info($connect,$userInfoTable,$fname,$lname,$id);
-    if ($update) {
+    $update = $server->update_info($connect,$userInfoTable,$table,$fname,$lname,$email,$id);
+    if ($update['update_info'] && $update['update_user']) {
         $user = $server->getSole($connect,$userInfoTable,$id);
         $fullname = ((isset($user['fname']) && $user['fname'] != "ยังไม่ได้ตั้ง") && (isset($user['lname']) && $user['lname'] != "ยังไม่ได้ตั้ง"))
         ? $user['fname'] . " " . $user['lname']
         : "ยังไม่ได้ตั้งชื่อ";
-        session_start();
         $_SESSION['fullname'] = $fullname;
         
     };

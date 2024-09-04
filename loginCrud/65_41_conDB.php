@@ -156,21 +156,33 @@ class Server
       echo "Error: " . $file['error'];
     }
   }
-  public function update_info($conn, $table, $fname, $lname, $id)
+  public function update_user ($conn,$table,$email,$id){
+    $sql = "UPDATE $table SET email = :email 
+            WHERE id = :id
+    ";
+    $stmt = $conn->prepare($sql);
+    $data = $stmt->execute(['email'=>$email,'id'=> $id]);
+    return $data;
+
+  }
+
+  public function update_info($conn, $table_info,$table_users, $fname, $lname,$email, $id)
   {
     if (!isset($fname) && !isset($lname) && !isset($id)) {
       return false;
     }
     ;
-    $sql = "UPDATE $table SET 
+    $sql = "UPDATE $table_info SET 
     fname = :fname,
-    lname = :lname
+    lname = :lname,
+    email = :email
     WHERE id = :id";
     // Prepare statement
     $stmt = $conn->prepare($sql);
-    $update = $stmt->execute(["fname" => $fname, "lname" => $lname, "id" => $id]);
-    
-    return $update;
+    $update_info = $stmt->execute(["fname" => $fname, "lname" => $lname,"email"=>$email, "id" => $id]);
+    $update_user = $this->update_user($conn, $table_users, $email, $id);
+
+    return ['update_info' => $update_info, 'update_user' => $update_user];
   }
   function getConnection()
   {

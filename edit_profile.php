@@ -28,6 +28,7 @@
             border-bottom-right-radius: 8px;
             border-top-left-radius: 8px;
             border-top-right-radius: 8px;
+            
         }
     </style>
 </head>
@@ -58,9 +59,10 @@
                                         <div class="row pt-1">
                                             <div class="col-8 mb-3">
                                                 <h6>อีเมลล์</h6>
-                                                <p class="text-muted"><?php echo $user_data['email'] ?></p>
+                                                <input class="form-control opacity-input" name="email" style="text-align: start; width:300px;"
+                                                value="<?php echo $user['email'] ?>">
                                             </div>
-                                            <div class="col-8 mb-3" style="display: flex; gap:50px;" >
+                                            <div class="col-8 mb-3" style="display: flex; gap:50px; margin-left:12px;" >
                                                 <div class="row" >
                                                 <h6>ชื่อจริง</h6>
                                                 <input class="form-control opacity-input" name="fname" style="text-align: start; width:120px;"
@@ -89,6 +91,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="d-flex justify-content-end" >
+                        <a href="profile.php" class="btn btn-primary">Back</a>
+            </div>
                     </div>
                 </div>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2024 at 05:38 PM
+-- Generation Time: Sep 04, 2024 at 12:29 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,9 +41,28 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`, `reg_date`) VALUES
-(1, 'maoezx056', '$2y$10$uTVAy5tijFQh57UMmHZ46.vfAfsJCRX1JCtTK.NWtpRglFeZPjkwm', 'maoezxooo@gmail.com', 0, '2024-07-27 16:51:22'),
-(3, 'maoezx056a', '$2y$10$SvtsCVgmrmcS3UBtvKKzrOoQp1VaoOEWNfdykrzxEKS/risqeBmG6', 'maoezxooo@gmail.com', 0, '2024-07-27 16:53:26'),
-(4, 'maoezx0560', '$2y$10$Z9iV3CGsxFJH6kZBLsSFzO3bE49IbDry4VCH.gRd5I1IdHRCTNtyG', 'ejemplo@ejemplo.mx', 0, '2024-07-31 14:10:25');
+(7, 'NicexD', '$2y$10$r8/NORbcviEVpLOBSxZDteRZP6VvtjPjMfabTnKt/PMWj8eqg3EC6', 'maoezxooo@gmail.com', 0, '2024-09-04 10:25:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_info`
+--
+
+CREATE TABLE `user_info` (
+  `id` int(11) NOT NULL,
+  `fname` varchar(40) NOT NULL,
+  `lname` varchar(40) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `avatar` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_info`
+--
+
+INSERT INTO `user_info` (`id`, `fname`, `lname`, `email`, `avatar`) VALUES
+(7, 'pasitsawa', 'bungoedx', 'maoezxooo@gmail.com', '20318557866d836051395c0.09279472.jpg');
 
 --
 -- Indexes for dumped tables
@@ -57,6 +76,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
+-- Indexes for table `user_info`
+--
+ALTER TABLE `user_info`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -64,7 +89,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(9) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

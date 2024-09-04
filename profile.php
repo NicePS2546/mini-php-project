@@ -30,21 +30,21 @@
                   style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                   <img src="<?php echo $avatar ?>" alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
                   <h5><?php echo $fullname ?></h5>
-                  <p><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
+                  <p style="font-size: 18px;"><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
                   <i class="far fa-edit mb-5"></i>
                 </div>
                 <div class="col-md-8">
                   <div class="card-body p-4">
-                    <h6>Information</h6>
+                    <h6>ข้อมูลโปรไฟล์</h6>
                     <hr class="mt-0 mb-4">
                     <div class="row pt-1">
                       <div class="col-8 mb-3">
-                        <h6>Email</h6>
+                        <h6>อีเมลล์</h6>
                         <p class="text-muted"><?php echo $user_data['email'] ?></p>
                       </div>
                       <div class="col-8 mb-3">
-                        <h6>Name</h6>
-                        <p class="text-muted"><?php echo $fullname ?></p>
+                        <h6>ชื่อ</h6>
+                        <p class="text-muted" style="font-size: 18px;"><?php echo $fullname ?></p>
                       </div>
                     </div>
 
