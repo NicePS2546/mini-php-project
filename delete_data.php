@@ -1,5 +1,5 @@
 <?php
-include '65_41_conDB.php';
+include 'db_config.php';
 include 'header.php';
 include 'footer.php';
 if (isset($_POST['id'])) {
@@ -36,7 +36,7 @@ if (isset($_POST['id'])) {
             </script>';
     }
 } else {
-    
+
     echo '<script>
         setTimeout(function() {
                 Swal.fire({

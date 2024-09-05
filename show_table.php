@@ -1,8 +1,8 @@
 <?php
-require_once '65_41_conDB.php';
+require_once 'db_config.php';
 include 'header.php';
 
-$reservationss = $server->getDataTable($connect,$table);
+$reservationss = $server->getDataTable($connect, $table);
 ?>
 
 <!DOCTYPE html>
@@ -10,9 +10,9 @@ $reservationss = $server->getDataTable($connect,$table);
 
 <head>
     <title>View Data</title>
-    
 
-    
+
+
 </head>
 
 <body>
@@ -39,11 +39,12 @@ $reservationss = $server->getDataTable($connect,$table);
             $center = "style = 'text-align:center; '";
             foreach ($reservationss as $reservations) {
                 $isMember = "";
-               if($reservations['member'] === 1 ){
-                  $isMember = "สมาชิก";
-               }else{
-                 $isMember = "ไม่ใช่สมาชิก";
-               };
+                if ($reservations['member'] === 1) {
+                    $isMember = "สมาชิก";
+                } else {
+                    $isMember = "ไม่ใช่สมาชิก";
+                }
+                ;
 
                 echo "<tbody><tr>
                     <td $center>" . $reservations['id'] . "</td>
@@ -58,21 +59,21 @@ $reservationss = $server->getDataTable($connect,$table);
                     <td $center>" . $reservations['total'] . "</td>
                     <td $center>" . $reservations['reg_date'] . "</td>
                     ";
-                    
+
                 ?>
 
-                <td >
+                <td>
                     <div class="d-flex gap-2">
                         <form action="edit_form.php" method="post">
-                    <input type="hidden" name="id" value="<?php echo $reservations['id']; ?>">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                    <form action="delete_data.php" method="POST" style="display:inline;">
-                        <input type="hidden" name="id" value="<?php echo $reservations['id']; ?>">
-                        <!-- <input type="submit" name="delete" value="Delete" class="btn btn-danger btn-sm"> -->
-                        <button type="button" class="btn btn-danger delete-button"
-                            data-user-id="<?php echo $reservations['id']; ?>">Delete</button>
-                    </form>
+                            <input type="hidden" name="id" value="<?php echo $reservations['id']; ?>">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                        <form action="delete_data.php" method="POST" style="display:inline;">
+                            <input type="hidden" name="id" value="<?php echo $reservations['id']; ?>">
+                            <!-- <input type="submit" name="delete" value="Delete" class="btn btn-danger btn-sm"> -->
+                            <button type="button" class="btn btn-danger delete-button"
+                                data-user-id="<?php echo $reservations['id']; ?>">Delete</button>
+                        </form>
                     </div>
                 </td>
 
@@ -101,7 +102,7 @@ $reservationss = $server->getDataTable($connect,$table);
 
 
     </script>
-<script>
+    <script>
         // ฟังก์ชันสาหรับแสดงกล่องยืนยัน ํ SweetAlert2
         function showDeleteConfirmation(id) {
             Swal.fire({

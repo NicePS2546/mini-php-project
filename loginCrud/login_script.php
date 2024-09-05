@@ -1,18 +1,18 @@
-<?php 
-   session_start();
-   include "65_41_conDB.php";
-   
+<?php
+session_start();
+include "db_config.php";
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        
 
-        $server->login($connect, $table,$email, $password);
-        
-    }
-      
-  
-  
-  
-  ?>
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+
+  $server->login($connect, $table, $email, $password);
+
+}
+
+
+
+
+?>

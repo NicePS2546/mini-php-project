@@ -1,27 +1,28 @@
 <?php
-    
-    include '65_41_conDB.php';
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $id = $_POST['id'];
-        $name = $_POST['reservedBy'];
-        $roomType = $_POST['roomType'];
-        $email = $_POST['email'];
-        $dayAmount = $_POST['dayAmount'];
-        $peopleAmount = $_POST['peopleAmount'];
-        $isMember = filter_var($_POST['member'], FILTER_VALIDATE_BOOLEAN);
-        $price = 0;
-        if($roomType === 'normal'){
-            $price = 850;
-        }else if($roomType === 'deluxe'){
-            $price = 1750;
-        }else{
-            $price = 3500;
-        };
+include 'db_config.php';
 
-       $result = $server->update($connect,$table,$dayAmount,$price,$isMember,$name,$email,$peopleAmount,$roomType,$id);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $name = $_POST['reservedBy'];
+    $roomType = $_POST['roomType'];
+    $email = $_POST['email'];
+    $dayAmount = $_POST['dayAmount'];
+    $peopleAmount = $_POST['peopleAmount'];
+    $isMember = filter_var($_POST['member'], FILTER_VALIDATE_BOOLEAN);
+    $price = 0;
+    if ($roomType === 'normal') {
+        $price = 850;
+    } else if ($roomType === 'deluxe') {
+        $price = 1750;
+    } else {
+        $price = 3500;
+    }
+    ;
 
-       if ($result) {
+    $result = $server->update($connect, $table, $dayAmount, $price, $isMember, $name, $email, $peopleAmount, $roomType, $id);
+
+    if ($result) {
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
         echo '<script>
                     setTimeout(function() {
@@ -51,7 +52,6 @@
                 }, 1000);
             </script>';
     }
-        
-    }
-    ?>
 
+}
+?>

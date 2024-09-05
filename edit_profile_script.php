@@ -1,6 +1,6 @@
 <?php
-    
- include "loginCrud/65_41_conDB.php";
+
+include "loginCrud/db_config.php";
 // upload.php
 // Directory where images will be stored
 $targetDir = "image/upload/";
@@ -12,11 +12,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
-    
+
 
     // Set default status to true in case no picture is uploaded
     $upload_picture['status'] = true;
-    $user = $server->getSole($connect,$userInfoTable,$id);
+    $user = $server->getSole($connect, $userInfoTable, $id);
     // Check if the file is uploaded
     if (isset($file) && $file['error'] == UPLOAD_ERR_OK) {
         // Call the upload function if a file is uploaded
@@ -31,18 +31,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $upload_picture = $server->upload_picture($connect, $userInfoTable, $id, $file, $targetDir);
     }
 
-    $update = $server->update_info($connect,$userInfoTable,$table,$fname,$lname,$email,$id);
+    $update = $server->update_info($connect, $userInfoTable, $table, $fname, $lname, $email, $id);
     if ($update['update_info'] && $update['update_user']) {
-        $user = $server->getSole($connect,$userInfoTable,$id);
+        $user = $server->getSole($connect, $userInfoTable, $id);
         $fullname = ((isset($user['fname']) && $user['fname'] != "ยังไม่ได้ตั้ง") && (isset($user['lname']) && $user['lname'] != "ยังไม่ได้ตั้ง"))
-        ? $user['fname'] . " " . $user['lname']
-        : "ยังไม่ได้ตั้งชื่อ";
+            ? $user['fname'] . " " . $user['lname']
+            : "ยังไม่ได้ตั้งชื่อ";
         $_SESSION['fullname'] = $fullname;
-        
-    };
-   echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
-   if ($upload_picture['status'] && $update) {
-    echo '<script>
+
+    }
+    ;
+    echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+    if ($upload_picture['status'] && $update) {
+        echo '<script>
                 setTimeout(function() {
                     Swal.fire({
                         position: "center",
@@ -56,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 });
                     }, 1000);
                     </script>';
-    exit();
-}  else {
-    echo '<script>
+        exit();
+    } else {
+        echo '<script>
     setTimeout(function() {
             Swal.fire({
                 position: "center",
@@ -72,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }, 1000);
         </script>';
         exit();
-}
+    }
 } else {
     echo "Invalid request.";
 }
