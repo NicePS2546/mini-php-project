@@ -1,6 +1,7 @@
 <?php
-include '65_41_conDB.php';
-echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+include 'db_config.php';
+include 'header.php';
+include 'footer.php';
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $result = $server->deleteById($connect, $table, $id);

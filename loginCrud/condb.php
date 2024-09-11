@@ -1,10 +1,5 @@
 <?php
-$servername = 'localhost';
-$DBusername = 'root';
-$DBpassword = '';
-$dataBaseName = 'LoginDB';
-$table = 'users';
-$userInfoTable = 'user_info';
+
 class Server
 {
   private $servername;
@@ -41,6 +36,10 @@ class Server
     $registerUser = $smt->execute(["username" => $username, "password" => $password, "email" => $email, "role" => $role]);
     return $registerUser;
   }
+
+
+
+
   public function add_userInfo($conn, $table, $id, $email)
   {
     $sql = "INSERT INTO $table (id, fname, lname, email) VALUES (:id, :fname, :lname, :email)";
@@ -58,9 +57,10 @@ class Server
       $_SESSION['id'] = $user['id'];
       $_SESSION['username'] = $user['username'];
       $_SESSION['email'] = $user['email'];
-      
+      $default_img = "https://firebasestorage.googleapis.com/v0/b/loginsys-b8d67.appspot.com/o/default_avatar.jpg?alt=media&token=7f437efa-c1af-46c6-a652-6445ea259caf";
+
       $user_info = $this->getSoleByEmail($conn, 'user_info', $_SESSION['email']);
-      $avatar = $user_info['avatar'] == "default_avatar.jpg" ? "image/" . $user_info['avatar'] : "image/upload/" . $user_info['avatar'];
+      $avatar = $user_info['avatar'] == "default_avatar" ? $default_img : "image/upload/" . $user_info['avatar'];
       $fullname = ((isset($user_info['fname']) && $user_info['fname'] != "ยังไม่ได้ตั้ง") && (isset($user_info['lname']) && $user_info['lname'] != "ยังไม่ได้ตั้ง"))
         ? $user_info['fname'] . " " . $user_info['lname']
         : "ยังไม่ได้ตั้งชื่อ";
@@ -68,7 +68,7 @@ class Server
       $_SESSION['fullname'] = $fullname;
       echo "<script>console.log('Login Successfully')</script>";
       header("Location: ../index.php");
-      exit(); // Ensure no further output after redirect
+      exit();
     } else {
       header("Location: login.php");
       exit();
@@ -101,6 +101,7 @@ class Server
     }
     return $data;
   }
+
 
   public function getSoleByEmail($conn, $table, $email)
   {
@@ -156,17 +157,18 @@ class Server
       echo "Error: " . $file['error'];
     }
   }
-  public function update_user ($conn,$table,$email,$id){
+  public function update_user($conn, $table, $email, $id)
+  {
     $sql = "UPDATE $table SET email = :email 
             WHERE id = :id
     ";
     $stmt = $conn->prepare($sql);
-    $data = $stmt->execute(['email'=>$email,'id'=> $id]);
+    $data = $stmt->execute(['email' => $email, 'id' => $id]);
     return $data;
 
   }
 
-  public function update_info($conn, $table_info,$table_users, $fname, $lname,$email, $id)
+  public function update_info($conn, $table_info, $table_users, $fname, $lname, $email, $id)
   {
     
     $sql = "UPDATE $table_info SET 
@@ -176,9 +178,8 @@ class Server
     WHERE id = :id";
     // Prepare statement
     $stmt = $conn->prepare($sql);
-    $update_info = $stmt->execute(["fname" => $fname, "lname" => $lname,"email"=>$email, "id" => $id]);
-    $last_op_id = $conn->lastInsertId();
-    $update_user = $this->update_user($conn, $table_users, $email, $last_op_id);
+    $update_info = $stmt->execute(["fname" => $fname, "lname" => $lname, "email" => $email, "id" => $id]);
+    $update_user = $this->update_user($conn, $table_users, $email, $id);
 
     return ['update_info' => $update_info, 'update_user' => $update_user];
   }
@@ -189,9 +190,7 @@ class Server
 }
 ;
 
-$server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
 
-$connect = $server->getConnection();
 
 
 ?>
