@@ -1,11 +1,9 @@
 <?php
 include '65_41_conDB.php';
-include 'header.php';
-include 'footer.php';
+echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
     $result = $server->deleteById($connect, $table, $id);
-    echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
     if ($result) {
         echo '<script>
                     setTimeout(function() {
@@ -36,7 +34,6 @@ if (isset($_POST['id'])) {
             </script>';
     }
 } else {
-    
     echo '<script>
         setTimeout(function() {
                 Swal.fire({
@@ -47,7 +44,7 @@ if (isset($_POST['id'])) {
                     showConfirmButton: true,
                     // timer: 1500
                     }).then(function() {
-                window.location = "ex05_show.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                window.location = "show_table.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
                     });
                 }, 1000);
             </script>';

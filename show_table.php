@@ -1,7 +1,7 @@
 <?php
 require_once '65_41_conDB.php';
 include 'header.php';
-
+$center = "style = 'text-align:center; '";
 $reservationss = $server->getDataTable($connect,$table);
 ?>
 
@@ -36,7 +36,7 @@ $reservationss = $server->getDataTable($connect,$table);
                 </tr>
             </thead>
             <?php
-            $center = "style = 'text-align:center; '";
+            
             foreach ($reservationss as $reservations) {
                 $isMember = "";
                if($reservations['member'] === 1 ){

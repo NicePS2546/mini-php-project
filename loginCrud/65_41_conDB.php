@@ -168,10 +168,7 @@ class Server
 
   public function update_info($conn, $table_info,$table_users, $fname, $lname,$email, $id)
   {
-    if (!isset($fname) && !isset($lname) && !isset($id)) {
-      return false;
-    }
-    ;
+    
     $sql = "UPDATE $table_info SET 
     fname = :fname,
     lname = :lname,
@@ -180,7 +177,8 @@ class Server
     // Prepare statement
     $stmt = $conn->prepare($sql);
     $update_info = $stmt->execute(["fname" => $fname, "lname" => $lname,"email"=>$email, "id" => $id]);
-    $update_user = $this->update_user($conn, $table_users, $email, $id);
+    $last_op_id = $conn->lastInsertId();
+    $update_user = $this->update_user($conn, $table_users, $email, $last_op_id);
 
     return ['update_info' => $update_info, 'update_user' => $update_user];
   }

@@ -44,7 +44,7 @@
                                 <div class="col-md-4 gradient-custom text-center text-white"
                                     style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
                                     <img src="<?php echo $avatar ?>"
-                                        alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                                        alt="Avatar" class="img-fluid rounded my-5" style="width: 80px;" />
                                     <input type="hidden" name="id" value="<?php echo $_SESSION['id'] ?>">
                                     
                                     

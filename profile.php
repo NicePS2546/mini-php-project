@@ -28,7 +28,7 @@
               <div class="row g-0">
                 <div class="col-md-4 gradient-custom text-center text-white"
                   style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                  <img src="<?php echo $avatar ?>" alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                  <img src="<?php echo $avatar ?>" alt="Avatar" class="img-fluid rounded my-5" style="width: 80px;" />
                   <h5><?php echo $fullname ?></h5>
                   <p style="font-size: 18px;"><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
                   <i class="far fa-edit mb-5"></i>

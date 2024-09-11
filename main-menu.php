@@ -5,12 +5,12 @@
 
         <a href="insertData.php" class="btn btn-success">Reservation System</a>
         <a href="show_table.php" class="btn btn-success">Show Table Data</a>
-        <a href="" class="btn btn-primary">Import Connect_DB & Insert Data with SQL</a>
+        <!-- <a href="" class="btn btn-primary">Import Connect_DB & Insert Data with SQL</a>
         <a href="" class="btn btn-primary">Insert Data with Form by exec</a>
         <a href="" class="btn btn-primary">Insert Data with SQL by Prepared Statement=> :</a>
         <a href="" class="btn btn-primary">Insert Data with SQL by Prepared Statement=> ?</a>
         <a href="" class="btn btn-primary">Insert Data with Form by PDO</a>
-        <a href="" class="btn btn-primary">View Student Data</a>
+        <a href="" class="btn btn-primary">View Student Data</a> -->
     </div>
 </div>
 <!-- End Content -->
