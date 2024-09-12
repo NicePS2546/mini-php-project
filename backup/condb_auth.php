@@ -155,6 +155,7 @@ class Server
       echo "Error: " . $file['error'];
     }
   }
+  
   public function update_user($conn, $table, $email, $id)
   {
     $sql = "UPDATE $table SET email = :email 
@@ -163,7 +164,6 @@ class Server
     $stmt = $conn->prepare($sql);
     $data = $stmt->execute(['email' => $email, 'id' => $id]);
     return $data;
-
   }
 
   public function update_info($conn, $table_info, $table_users, $fname, $lname, $email, $id)
@@ -185,7 +185,32 @@ class Server
     $conn->rollBack();
   }
   }
-
+public function update_infoByAdmin($conn, $table_info, $table_users, $fname, $lname, $email,$role, $id)
+  {
+    try {
+    $conn->beginTransaction();
+    $sql = "UPDATE $table_info SET 
+    fname = :fname,
+    lname = :lname,
+    email = :email,
+    role = :role
+    WHERE id = :id";
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+    $update_info = $stmt->execute(["fname" => $fname, "lname" => $lname, "email" => $email, "role"=>$role , "id" => $id]);
+    
+    $sql = "UPDATE $table_users SET email = :email , role = :role
+            WHERE id = :id
+    ";
+    $stmt = $conn->prepare($sql);
+    $update_user= $stmt->execute(['email' => $email,'role'=>$role, 'id' => $id]);
+    $conn->commit();
+    return $update_user && $update_info;
+  }catch(PDOException $e) {
+    $conn->rollBack();
+    return $e;
+  }
+  }
   function new_register($conn, $fname, $lname, $email, $passwordHash)
   {
     try {

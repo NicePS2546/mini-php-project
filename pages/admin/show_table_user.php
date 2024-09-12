@@ -4,6 +4,8 @@ include 'header.php';
 
 $center = "style='text-align:center;'";
 $users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
+$p_url = $_POST['p_url'] ?? null;
+echo $p_url;
 ?>
 
 <!DOCTYPE html>
@@ -36,9 +38,9 @@ $users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
 
             foreach ($users as $user) {
                 $default_img = "https://firebasestorage.googleapis.com/v0/b/loginsys-b8d67.appspot.com/o/default_avatar.jpg?alt=media&token=7f437efa-c1af-46c6-a652-6445ea259caf";
-                $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/" . $user['avatar'];
+                $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/".$user['id']."/" . $user['avatar'];
                 $role = "";
-                if ($role === 1) {
+                if ($user['role'] === 1) {
                     $role = "Admin";
                 } else {
                     $role = "User";
@@ -58,8 +60,9 @@ $users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
 
                 <td>
                     <div class="d-flex gap-2">
-                        <form action="edit_form.php" method="post">
+                        <form action="update_user_data.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                            <input type="hidden" name="p_url" value="<?php echo htmlspecialchars($p_url); ?>">
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
                         <form action="delete_data.php" method="POST" style="display:inline;">
@@ -101,7 +104,7 @@ $users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
         function showDeleteConfirmation(id) {
             Swal.fire({
                 title: 'คุณแน่ใจหรือไม่?',
-                text: 'คุณจะไม่สามารถเรียกคืนข ้อมูลกลับได ้!',
+                text: 'คุณจะไม่สามารถเรียกคืนข้อมูลกลับได้!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'ลบ',

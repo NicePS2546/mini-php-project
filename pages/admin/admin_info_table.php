@@ -2,8 +2,10 @@
 require_once '../../loginCrud/db_config.php';
 include 'header.php';
 include 'footer.php';
+$p_url = $_POST['p_url'] ?? null;
 $center = "style='text-align:center;'";
 $users = $server->getAllAdmin($connect, $userInfoTable);
+echo $p_url;
 ?>
 
 <!DOCTYPE html>
@@ -53,8 +55,9 @@ $users = $server->getAllAdmin($connect, $userInfoTable);
 
                 <td>
                     <div class="d-flex gap-2">
-                        <form action="edit_form.php" method="post">
+                        <form action="update_user_data.php" method="post">
                             <input type="hidden" name="id" value="<?php echo $user['id']; ?>">
+                            <input type="hidden" name="p_url" value="<?php echo $p_url; ?>">
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </form>
                         <form action="delete_data.php" method="POST" style="display:inline;">
@@ -96,7 +99,7 @@ $users = $server->getAllAdmin($connect, $userInfoTable);
         function showDeleteConfirmation(id) {
             Swal.fire({
                 title: 'คุณแน่ใจหรือไม่?',
-                text: 'คุณจะไม่สามารถเรียกคืนข ้อมูลกลับได ้!',
+                text: 'คุณจะไม่สามารถเรียกคืนข้อมูลกลับได ้!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'ลบ',

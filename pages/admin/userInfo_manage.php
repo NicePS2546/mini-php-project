@@ -5,6 +5,6 @@
     };
     
     $user = $server->getSoleJoin($connect, $table, $userInfoTable, 'id','id', $_SESSION['id'] );
-    $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/" . $user['avatar'];
+    $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/".$_SESSION['id']."/". $user['avatar'];
 
 ?>

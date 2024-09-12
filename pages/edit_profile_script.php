@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include "../loginCrud/db_config.php";
 // upload.php
 // Directory where images will be stored
-$targetDir = "../image/upload/";
+
 
 // Check if the form was submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $lname = $_POST['lname'];
     $email = $_POST['email'];
 
-
+    $targetDir = "../image/upload/$id/";
     $upload_picture = true;
     $user = $server->getSole($connect, $userInfoTable, $id);
     // Check if the file is uploaded

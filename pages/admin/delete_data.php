@@ -1,12 +1,11 @@
 <?php
-include 'db_config.php';
-include 'header.php';
-include 'footer.php';
+include '../../loginCrud/db_config.php';
+
 if (isset($_POST['id'])) {
     $id = $_POST['id'];
-    $result = $server->deleteById($connect, $table, $id);
+    $callbacks = $server->delete_user($connect,$table ,$userInfoTable,'id',$id);
     echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
-    if ($result) {
+    if ($callbacks) {
         echo '<script>
                     setTimeout(function() {
                         Swal.fire({
@@ -16,7 +15,7 @@ if (isset($_POST['id'])) {
                             showConfirmButton: true,
                             // timer: 1500
                         }).then(function() {
-                        window.location = "show_table.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                      history.back()
                     });
                         }, 1000);
                         </script>';
@@ -30,7 +29,7 @@ if (isset($_POST['id'])) {
                     showConfirmButton: true,
                     // timer: 1500
                     }).then(function() {
-                window.location = "show_table.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                history.back()
                     });
                 }, 1000);
             </script>';
@@ -46,7 +45,7 @@ if (isset($_POST['id'])) {
                     showConfirmButton: true,
                     // timer: 1500
                     }).then(function() {
-                window.location = "show_table.php"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                history.back()
                     });
                 }, 1000);
             </script>';

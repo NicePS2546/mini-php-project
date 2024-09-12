@@ -1,11 +1,10 @@
 <?php
 require_once '../../loginCrud/db_config.php';
 include 'header.php';
-$p_url = $_POST['p_url'] ?? null;
+$p_url = $_POST['p_url'] ?? '';
 $center = "style='text-align:center;'";
-$users = $server->getAllUser($connect, $userInfoTable);
+$users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
 $default_img = "https://firebasestorage.googleapis.com/v0/b/loginsys-b8d67.appspot.com/o/default_avatar.jpg?alt=media&token=7f437efa-c1af-46c6-a652-6445ea259caf";
-echo $p_url;
 ?>
 
 <!DOCTYPE html>
@@ -36,7 +35,7 @@ echo $p_url;
             <?php
             echo count($users);
             foreach ($users as $user) {
-                $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/" . $user['avatar'];
+                $avatar = $user['avatar'] == "default_avatar" ? $default_img : "../../image/upload/".$user['id'] ."/". $user['avatar'];
                 $role = "";
                 if ($user['role'] === 1) {
                     $role = "Admin";

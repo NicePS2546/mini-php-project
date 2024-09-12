@@ -223,12 +223,12 @@ class Server
     }
 
     // Delete data by ID
-    public function deleteById($conn, $table, $id)
+    public function deleteById($conn, $table, $var='id', $id)
     {
         try {
-            $sql = "DELETE FROM $table WHERE id = :id";
+            $sql = "DELETE FROM $table WHERE $var = :$var";
             $stmt = $conn->prepare($sql);
-            $result = $stmt->execute(["id" => $id]);
+            $result = $stmt->execute([$var => $id]);
             echo "<script>console.log('Deleted Users')</script>";
             return $result;
         } catch (PDOException $e) {
@@ -379,7 +379,41 @@ class Server
         }
         return $error == null ? null : $error;
     }
-
+    public function upload_pictureById($conn, $table, $id, $file, $targetDir)
+    {
+      if ($file['error'] === UPLOAD_ERR_OK) {
+        // Generate a random file name
+        $fileExtension = pathinfo($file['name'], PATHINFO_EXTENSION);
+        $randomFileName = uniqid(mt_rand(), true) . '.' . $fileExtension;
+  
+        // Full path for the target file
+        $targetFile = $targetDir . $randomFileName;
+  
+        // Check if the target directory exists; if not, create it
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0755, true); // Create the directory with 0755 permissions
+        }
+  
+        // Move the uploaded file to the target directory
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            // Update the database with the new file name
+            $sql = "UPDATE $table SET avatar = :avatar WHERE id = :id";
+            $stmt = $conn->prepare($sql);
+            $upload = $stmt->execute(["avatar" => $randomFileName, "id" => $id]);
+  
+            // Save the new avatar path in session
+            
+  
+            return $upload;
+        } else {
+            echo "Error moving the uploaded file.";
+        }
+    } else {
+        echo "Error: " . $file['error'];
+    }
+  
+    return false;
+    }
     // Update avatar
     public function update_user($conn, $table, $email, $id)
     {
@@ -412,8 +446,69 @@ class Server
       return $e;
     }
     }
+    public function update_infoByAdmin($conn, $table_info, $table_users, $fname, $lname, $email, $role, $id)
+{
+    try {
+        // Start the transaction
+        $conn->beginTransaction();
+
+        // Update $table_info
+        $sql = "UPDATE $table_info SET 
+                fname = :fname,
+                lname = :lname,
+                email = :email,
+                role = :role
+                WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $update_info = $stmt->execute([
+            "fname" => $fname,
+            "lname" => $lname,
+            "email" => $email,
+            "role" => $role,
+            "id" => $id
+        ]);
+
+        // Update $table_users
+        $sql = "UPDATE $table_users SET email = :email, role = :role WHERE id = :id";
+        $stmt = $conn->prepare($sql);
+        $update_user = $stmt->execute([
+            'email' => $email,
+            'role' => $role,
+            'id' => $id
+        ]);
+
+        // Commit the transaction if both updates were successful
+        if ($update_info && $update_user) {
+            $conn->commit();
+            return true;
+        } else {
+            $conn->rollBack();
+            return false;
+        }
+    } catch (PDOException $e) {
+        // Rollback the transaction in case of error
+        $conn->rollBack();
+        // Log the error message for debugging
+        error_log("Error updating data: " . $e->getMessage());
+        return false;
+    }
 }
 
+    public function delete_user($conn,$table,$table2,$var,$id){
+        try {
+            $conn->beginTransaction();
+            $delete_user = $this->deleteById($conn, $table,$var, $id);
+            $delete_user_info = $this->deleteById($conn, $table2,$var, $id);
+            $conn->commit();
+            return $delete_user && $delete_user_info;
+        }catch(PDOException $e) {
+            $conn->rollBack();
+            return $e;
+        }
+    }
+}
+
+    
 
 
 ?>

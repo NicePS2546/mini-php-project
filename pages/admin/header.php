@@ -2,7 +2,7 @@
     session_start();
     include "session_manage.php"; 
     include "userInfo_manage.php";
-
+    $baseUrl = "http://localhost/65-41/mini-php-project/pages/admin/";
 ?>
      
 <!DOCTYPE html>
