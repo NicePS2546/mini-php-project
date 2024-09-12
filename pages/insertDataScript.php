@@ -1,6 +1,6 @@
 <?php
     
-    include '65_41_conDB.php';
+    include 'db_config.php';
     
 
     if($_SERVER['REQUEST_METHOD'] == 'POST'){

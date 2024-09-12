@@ -1,5 +1,11 @@
-<?php include "session_manage.php"; ?>
+<?php
+    session_start();
 
+    include "session_manage.php"; 
+
+
+?>
+     
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +37,7 @@
         <div class="container">
             <a class="navbar-brand" href="profile.php"><img src="<?php echo $_SESSION['avatar'] ?>" alt="myphoto" class="rounded-pill
 me-2 text-uppercase" style="width: 30px;"><?php echo strtoupper($_SESSION['fullname']); ?></a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bstarget="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 arialabel="Toggle navigation">
@@ -38,10 +45,13 @@ me-2 text-uppercase" style="width: 30px;"><?php echo strtoupper($_SESSION['fulln
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="loginCrud/logout.php">Logout</a>
-                    </li>
                     
+                    <li class="nav-item">
+                        <a class="nav-link" href="../loginCrud/logout.php">Logout</a>
+                    </li>
+                    <li class="nav-item">
+                    <a><?php echo $_SESSION['fullname']; ?></a>
+                    </li>
             </div>
         </div>
     </nav>

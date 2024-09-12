@@ -11,7 +11,7 @@ include "footer.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="styleSheet" href="custom.css">
+    <link rel="styleSheet" href="../css/custom.css">
 </head>
 
 <body>

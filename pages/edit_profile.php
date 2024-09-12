@@ -1,4 +1,7 @@
-<?php include "user_manage.php";
+<?php 
+include "header.php";
+include "user_manage.php";
+include "footer.php";
        ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +52,7 @@
                                     
                                     
                                     <p><?php echo $fullname ?></p>
-                                    <p><?php echo $user_data['role'] == 1 ? "Admin" : "User" ?></p>
+                                    <p><?php echo $user['role'] == 1 ? "Admin" : "User" ?></p>
                                     <i class="far fa-edit mb-5"></i>
                                 </div>
                                 <div class="col-md-8">
@@ -93,6 +96,7 @@
                         </div>
                         <div class="d-flex justify-content-end" >
                         <a href="profile.php" class="btn btn-primary">Back</a>
+                        
             </div>
                     </div>
                 </div>

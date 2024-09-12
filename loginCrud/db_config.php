@@ -1,5 +1,6 @@
 <?php
-include "condb.php";
+// include "../utils/Server.php";
+include __DIR__ . "/../utils/Server.php";
 
 $servername = 'localhost';
 $DBusername = 'root';

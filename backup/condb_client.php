@@ -64,6 +64,36 @@ class Server
     return $result;
 
   }
+  public function getSoleJoin($conn, $pk_tb = "persons", $fk_tb = "tb_users", $fk_key = "id", $pk_key = "id",$id/*default value*/ )
+  {
+    /**
+ * Determine if a variable is considered set, this means if a variable is declared and is different than `null` .
+ *
+ * @param object $conn mySql connection.
+ * @param string $pk_tb primary key table.
+ * @param string $fk_tb foreign key table.
+ * @param string $pk_key primary key of primary table.
+ * @param string $fk_key primary key foreign table.
+ * @param string $id get id to find info in database
+ * @return array Returns `true` if `fetched data` exists and has any value other than `null` . `false` otherwise.
+ */
+    $sql = "SELECT $pk_tb.*, $fk_tb.*  
+            FROM $pk_tb
+            LEFT JOIN $fk_tb ON $pk_tb.$pk_key = $fk_tb.$fk_key
+            WHERE $pk_tb.$pk_key = :$pk_key";
+
+    
+
+    $smt = $conn->prepare($sql);
+    $smt->execute([$pk_key => $id]);
+    $data = $smt->fetch(PDO::FETCH_ASSOC);
+    if ($data) {
+      echo "<script>console.log('fetched user')</script>";
+    } else {
+      echo "<script>console.log('error')</script>";
+    }
+    return $data;
+  }
   public function update($conn, $tablename, $dayAmount, $price, $isMember, $reservedBy, $email, $peopleAmount, $roomType, $id)
   {
 
