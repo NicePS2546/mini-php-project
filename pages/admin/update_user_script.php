@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                             showConfirmButton: true,
                             // timer: 1500
                         }).then(function() {
-                        window.location = "'.$p_url.'?p_url='.$p_url.'"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                        window.location = "'.$p_url.'?p_url='.urlencode($p_url).'"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
                     });
                         }, 1000);
                         </script>';
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     showConfirmButton: true,
                     // timer: 1500
                     }).then(function() {
-                window.location = "'.$p_url.'?p_url='.$p_url.'"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
+                window.location = "'.$p_url.'?p_url='.urlencode($p_url).'"; // Redirect to.. ปรับแก ้ชอไฟล์ตามที่ต้องการให ้ไป ื่
                     });
                 }, 1000);
             </script>';

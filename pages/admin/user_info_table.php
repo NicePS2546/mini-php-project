@@ -1,7 +1,7 @@
 <?php
 require_once '../../loginCrud/db_config.php';
 include 'header.php';
-$p_url = $_POST['p_url'] ?? null;
+$p_url = $_GET['p_url'] ?? null;
 $center = "style='text-align:center;'";
 $users = $server->getAllUser($connect, $userInfoTable);
 $default_img = "https://firebasestorage.googleapis.com/v0/b/loginsys-b8d67.appspot.com/o/default_avatar.jpg?alt=media&token=7f437efa-c1af-46c6-a652-6445ea259caf";

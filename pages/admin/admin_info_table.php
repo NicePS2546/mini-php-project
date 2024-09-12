@@ -2,7 +2,7 @@
 require_once '../../loginCrud/db_config.php';
 include 'header.php';
 include 'footer.php';
-$p_url = $_POST['p_url'] ?? null;
+$p_url = $_GET['p_url'] ?? null;
 $center = "style='text-align:center;'";
 $users = $server->getAllAdmin($connect, $userInfoTable);
 echo $p_url;
