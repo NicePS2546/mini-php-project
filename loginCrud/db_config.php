@@ -11,6 +11,6 @@ $userInfoTable = 'user_info';
 
 
 $server = new Server($servername, $DBusername, $DBpassword, $dataBaseName);
-
 $connect = $server->getConnection();
+
 ?>

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($user && !empty($user['avatar'])) {
             $oldFile = $targetDir . $user['avatar'];
             
-            $upload_picture = $server->upload_picture($connect, $userInfoTable,  $file, $targetDir,$id);
+            $upload_picture = $server->upload_picture($update_conn, $userInfoTable,  $file, $targetDir,$id);
             if($upload_picture && file_exists($oldFile)){
                 unlink($oldFile); // Deletes the old file
             };
@@ -32,11 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
        
     }
 
-    $update = $server->update_info($connect, $userInfoTable, $table, $fname, $lname, $email, $id);
+    $update = $server->update_info($update_conn, $userInfoTable, $table, $fname, $lname, $email, $id);
     echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
     
     if ($upload_picture && $update) {
-        $user = $server->getSole($connect, $userInfoTable, $id);
+        $user = $get->getSole($get_conn, $userInfoTable, $id);
         $fullname = ((isset($user['fname']) && $user['fname'] != "ยังไม่ได้ตั้ง") && (isset($user['lname']) && $user['lname'] != "ยังไม่ได้ตั้ง"))
                 ? $user['fname'] . " " . $user['lname']
                 : "ยังไม่ได้ตั้งชื่อ";

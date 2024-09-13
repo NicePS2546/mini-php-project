@@ -4,6 +4,7 @@ include 'header.php';
 
 $center = "style='text-align:center;'";
 $users = $server->getAllJoin($connect, $table,$userInfoTable,'id','id');
+
 $p_url = $_GET['p_url'] ?? null;
 echo $p_url;
 ?>

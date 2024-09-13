@@ -287,7 +287,7 @@ class Server
             $default_img = "https://firebasestorage.googleapis.com/v0/b/loginsys-b8d67.appspot.com/o/default_avatar.jpg?alt=media&token=7f437efa-c1af-46c6-a652-6445ea259caf";
 
             $user_info = $this->getSoleByEmail($conn, 'user_info', $user['email']);
-            $avatar = $user_info['avatar'] == "default_avatar" ? $default_img : "../image/upload/" . $user_info['avatar'];
+            $avatar = $user_info['avatar'] == "default_avatar" ? $default_img : "../image/upload/".$user['id']."/". $user_info['avatar'];
             $fullname = ((isset($user_info['fname']) && $user_info['fname'] != "ยังไม่ได้ตั้ง") && (isset($user_info['lname']) && $user_info['lname'] != "ยังไม่ได้ตั้ง"))
                 ? $user_info['fname'] . " " . $user_info['lname']
                 : "ยังไม่ได้ตั้งชื่อ";

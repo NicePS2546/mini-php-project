@@ -24,6 +24,10 @@
             $url = "user_info_table.php";
             $p_url = "user_info_table.php";
             break;
+        case $baseUrl . "all_userInfo_table.php":
+            $url = "all_userInfo_table.php";
+            $p_url = "all_userInfo_table.php";
+            break;
         default:
             break;
     }

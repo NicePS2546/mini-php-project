@@ -8,7 +8,7 @@ include "db_config.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['id'])) {
         $id = $_POST['id'];
-        $reservation = $server->getSole($connect, $table, $id);
+        $reservation = $get->getSole($connect, $table, $id);
         echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
 
         ?>

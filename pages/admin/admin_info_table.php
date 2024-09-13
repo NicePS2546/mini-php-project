@@ -5,7 +5,7 @@ include 'footer.php';
 $p_url = $_GET['p_url'] ?? null;
 $center = "style='text-align:center;'";
 $users = $server->getAllAdmin($connect, $userInfoTable);
-echo $p_url;
+
 ?>
 
 <!DOCTYPE html>
